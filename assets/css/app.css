@@ -1,0 +1,123 @@
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #475569;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+@keyframes ebonyi-farm-market-field-shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-4px); }
+    40% { transform: translateX(4px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+}
+
+.field-error-shake {
+    animation: ebonyi-farm-market-field-shake 0.35s ease-in-out;
+}
+
+.field-error-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='9' fill='%23ef4444'/%3E%3Cpath d='M10 5.5v6' stroke='%23fff' stroke-width='1.8' stroke-linecap='round'/%3E%3Ccircle cx='10' cy='14.5' r='1' fill='%23fff'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 0.95rem 0.95rem;
+    padding-right: 2.5rem !important;
+}
+
+@keyframes ebonyi-farm-market-splash-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.82;
+    }
+    50% {
+        transform: scale(1.04);
+        opacity: 1;
+    }
+}
+
+.ebonyi-farm-market-splash-logo {
+    animation: ebonyi-farm-market-splash-pulse 2.2s ease-in-out infinite;
+}
+
+.ebonyi-farm-market-page-bg {
+    background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.12), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.08), transparent 24%),
+        linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.dark .ebonyi-farm-market-page-bg {
+    background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.32), transparent 24%),
+        linear-gradient(180deg, #020617 0%, #0f172a 100%);
+}
+
+.ebonyi-farm-market-card-glow {
+    box-shadow: 0 20px 70px rgba(15, 23, 42, 0.12);
+}
+
+.ebonyi-farm-market-review-summary {
+    list-style: none;
+}
+
+.ebonyi-farm-market-review-summary::-webkit-details-marker {
+    display: none;
+}
+
+details[open] .ebonyi-farm-market-review-toggle-closed {
+    display: none;
+}
+
+details:not([open]) .ebonyi-farm-market-review-toggle-open {
+    display: none;
+}
+
+details[open] .ebonyi-farm-market-review-toggle-open {
+    display: inline-flex;
+}
+
+details[open] .ebonyi-farm-market-review-chevron {
+    transform: rotate(180deg);
+}
+
+.ebonyi-farm-market-review-panel {
+    animation: ebonyi-farm-market-review-fade 180ms ease-out;
+}
+
+@keyframes ebonyi-farm-market-review-fade {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

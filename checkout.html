@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ebonyi Farm Market - Checkout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            900: '#14532d',
+                            950: '#052e16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="./assets/css/app.css">
+</head>
+<body class="ebonyi-farm-market-page-bg text-slate-800 font-sans transition-colors duration-300 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 max-w-sm pointer-events-none"></div>
+
+    <div class="border-b border-slate-100 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+                <button type="button" onclick="closeCheckoutModal()" class="p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-900 dark:hover:text-white transition" aria-label="Back to store">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                </button>
+                <div class="min-w-0">
+                    <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Checkout</p>
+                    <h1 class="text-xl sm:text-2xl font-black truncate">Complete delivery request</h1>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="toggleDarkMode()" class="p-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:border-brand-500 hover:text-brand-600 transition" aria-label="Toggle theme">
+                    <i data-lucide="sun" id="theme-icon-light" class="w-5 h-5 hidden"></i>
+                    <i data-lucide="moon" id="theme-icon-dark" class="w-5 h-5 hidden"></i>
+                </button>
+                <a href="./storefront.html" class="inline-flex items-center gap-2 rounded-xl bg-slate-900 dark:bg-slate-800 px-3 py-2 text-xs sm:text-sm font-bold text-white hover:bg-slate-700 transition">
+                    <i data-lucide="store" class="w-4 h-4"></i>
+                    <span>Storefront</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-1 overflow-y-auto">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+            <div id="checkout-empty-notice" class="hidden mb-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/40 dark:text-amber-300">
+                Your basket is empty. Go back to the storefront first, then return here to complete checkout.
+            </div>
+
+            <div id="checkout-modal" class="bg-white dark:bg-slate-900 rounded-3xl w-full shadow-2xl border border-slate-100 dark:border-slate-800 flex flex-col overflow-hidden">
+                <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                    <h3 class="text-xl font-extrabold">Complete Delivery Request</h3>
+                    <button onclick="closeCheckoutModal()" class="p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <div class="p-6 overflow-y-auto space-y-6 flex-grow">
+                    <div class="flex items-center justify-between text-xs font-bold text-slate-400 relative">
+                        <div class="absolute h-0.5 bg-slate-200 dark:bg-slate-800 left-8 right-8 top-3.5 z-0"></div>
+                        <div id="checkout-line-progress" class="absolute h-0.5 bg-brand-500 left-8 w-0 top-3.5 z-0 transition-all duration-300"></div>
+                        <div class="z-10 text-center flex flex-col items-center gap-1.5">
+                            <span id="step-1-badge" class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center text-sm">1</span>
+                            <span class="text-brand-600 font-semibold" id="step-1-label">Contact</span>
+                        </div>
+                        <div class="z-10 text-center flex flex-col items-center gap-1.5">
+                            <span id="step-2-badge" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-sm">2</span>
+                            <span id="step-2-label">Payment</span>
+                        </div>
+                        <div class="z-10 text-center flex flex-col items-center gap-1.5">
+                            <span id="step-3-badge" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-sm">3</span>
+                            <span id="step-3-label">Finished</span>
+                        </div>
+                    </div>
+                    <div id="checkout-form-status" class="hidden rounded-2xl border px-4 py-3 text-xs font-semibold"></div>
+
+                    <form id="checkout-form-step-1" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Full Name</label>
+                                <input type="text" required id="cust-name" placeholder="John Doe" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Phone Line</label>
+                                <input type="tel" required id="cust-phone" inputmode="tel" autocomplete="tel" pattern="[0-9+()\\-\\s]{7,20}" placeholder="+1 (555) 019-2834" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Pantry Delivery Address</label>
+                            <input type="text" required id="cust-address" placeholder="Room 402, Oakwood Dorms or Street block" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Special Instructions (Optional)</label>
+                            <textarea id="cust-notes" placeholder="e.g. Leave with dorm warden, ring bell twice" rows="2" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500"></textarea>
+                        </div>
+                    </form>
+
+                    <form id="checkout-form-step-2" class="space-y-4 hidden">
+                        <div class="p-4 bg-slate-50 dark:bg-slate-800/80 rounded-2xl border border-slate-200/50 dark:border-slate-700 flex flex-col gap-3">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="radio" name="payment-method" value="pod" checked class="w-4 h-4 text-brand-600 accent-brand-600" onchange="toggleCardInputs(false)">
+                                <div>
+                                    <h4 class="font-bold text-sm">Pay on Delivery / Cash / Cashless Transfer</h4>
+                                    <p class="text-xs text-slate-400">Pay directly when rider drops off provisions.</p>
+                                </div>
+                            </label>
+                            <hr class="border-slate-200 dark:border-slate-700">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="radio" name="payment-method" value="card" class="w-4 h-4 text-brand-600 accent-brand-600" onchange="toggleCardInputs(true)">
+                                <div>
+                                    <h4 class="font-bold text-sm">Credit / Debit Card</h4>
+                                    <p class="text-xs text-slate-400">Securely check out right now.</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div id="card-details-fields" class="space-y-4 hidden">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Cardholder Name</label>
+                                <input type="text" id="card-holder" autocomplete="cc-name" placeholder="John Doe" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Card Number</label>
+                                <input type="text" id="card-num" inputmode="numeric" autocomplete="cc-number" maxlength="19" placeholder="4242 4242 4242 4242" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Expiry</label>
+                                    <input type="text" id="card-expiry" inputmode="numeric" autocomplete="cc-exp" maxlength="5" placeholder="MM/YY" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">CVC/CVV</label>
+                                    <input type="password" id="card-cvv" inputmode="numeric" autocomplete="cc-csc" maxlength="3" placeholder="123" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div id="checkout-form-step-3" class="space-y-6 hidden">
+                        <div class="text-center space-y-2">
+                            <div class="w-16 h-16 bg-brand-100 dark:bg-brand-950 text-brand-600 rounded-full flex items-center justify-center mx-auto text-3xl animate-bounce">
+                                🎉
+                            </div>
+                            <h3 class="text-xl font-extrabold text-brand-600 dark:text-brand-400">Provision Delivery Ordered!</h3>
+                            <p class="text-xs text-slate-400">Order ID: <span id="receipt-order-id" class="font-mono">#PVG-59281</span></p>
+                        </div>
+
+                        <div class="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs text-slate-600 dark:text-slate-300 relative">
+                            <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-500 to-amber-500"></div>
+                            <div class="text-center font-bold mb-4 uppercase tracking-widest pt-2">Ebonyi Farm Market Receipt Summary</div>
+                            <div class="space-y-1.5 mb-4 pb-4 border-b border-dashed border-slate-300 dark:border-slate-800">
+                                <p>Customer: <span id="rec-cust-name" class="font-bold"></span></p>
+                                <p>Contact: <span id="rec-cust-phone"></span></p>
+                                <p>Address: <span id="rec-cust-addr" class="font-bold"></span></p>
+                                <p>Paid via: <span id="rec-pay-method" class="font-bold uppercase text-brand-600"></span></p>
+                            </div>
+                            <div id="rec-items-list" class="space-y-1.5 pb-4 mb-4 border-b border-dashed border-slate-300 dark:border-slate-800"></div>
+                            <div class="space-y-1 text-right">
+                                <p>Subtotal: <span id="rec-subtotal" class="font-bold"></span></p>
+                                <p>Promo Code Discount: <span id="rec-discount" class="text-brand-600 font-bold"></span></p>
+                                <p>Delivery: <span id="rec-delivery" class="font-bold"></span></p>
+                                <p class="text-sm font-bold text-slate-900 dark:text-white pt-1">Total Bill: <span id="rec-total"></span></p>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button onclick="printReceiptMock()" class="text-xs text-brand-600 dark:text-brand-400 hover:underline flex items-center justify-center gap-1 mx-auto">
+                                <i data-lucide="printer" class="w-3.5 h-3.5"></i> Simulated Print Receipt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 flex flex-col sm:flex-row gap-4">
+                    <button id="checkout-back-btn" onclick="handleCheckoutBack()" class="flex-1 py-3 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 font-bold rounded-xl transition text-sm">
+                        Back
+                    </button>
+                    <button id="checkout-next-btn" onclick="handleCheckoutNext()" class="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-brand-500/10 transition text-sm flex items-center justify-center gap-2">
+                        <span>Continue</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./assets/js/app.js?v=20260927crops3"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!S.cart.length) {
+                $('checkout-empty-notice')?.classList.remove('hidden');
+            }
+            syncStep();
+        });
+    </script>
+</body>
+</html>

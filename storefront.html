@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ebonyi Farm Market - Premium Daily Provisions Store</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            900: '#14532d',
+                            950: '#052e16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar styling for a premium look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        body {
+            overflow-x: hidden;
+        }
+        @keyframes ebonyi-farm-market-field-shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-4px); }
+            40% { transform: translateX(4px); }
+            60% { transform: translateX(-3px); }
+            80% { transform: translateX(3px); }
+        }
+        .field-error-shake {
+            animation: ebonyi-farm-market-field-shake 0.35s ease-in-out;
+        }
+        .field-error-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='9' fill='%23ef4444'/%3E%3Cpath d='M10 5.5v6' stroke='%23fff' stroke-width='1.8' stroke-linecap='round'/%3E%3Ccircle cx='10' cy='14.5' r='1' fill='%23fff'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 0.95rem 0.95rem;
+            padding-right: 2.5rem !important;
+        }
+        @media (max-width: 640px) {
+            #toast-container {
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
+                max-width: none;
+            }
+            #welcome-overlay {
+                overflow-y: auto;
+            }
+            #auth-modal > div,
+            #checkout-modal > div,
+            #detail-modal > div {
+                max-height: calc(100dvh - 1.5rem);
+            }
+            #cart-drawer {
+                max-width: 100vw;
+            }
+            #checkout-modal .flex.items-center.justify-between.text-xs.font-bold.text-slate-400.relative span[id$='-label'] {
+                font-size: 0.7rem;
+            }
+        }
+        @keyframes ebonyi-farm-market-splash-pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.82;
+            }
+            50% {
+                transform: scale(1.04);
+                opacity: 1;
+            }
+        }
+        .ebonyi-farm-market-splash-logo {
+            animation: ebonyi-farm-market-splash-pulse 2.2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans transition-colors duration-300 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Floating Notification Toaster -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 max-w-sm pointer-events-none"></div>
+
+    <!-- Splash Welcome -->
+    <div id="splash-screen" class="fixed inset-0 z-[85] bg-white flex items-center justify-center transition-opacity duration-700">
+        <div class="flex flex-col items-center justify-center gap-6 px-6 text-center">
+            <img src="./assets/img/rabbit.gif" alt="Animated farm market mascot" class="ebonyi-farm-market-splash-logo w-48 h-48 sm:w-64 sm:h-64 object-contain">
+            <div class="space-y-2">
+                <p class="text-slate-500 text-xs uppercase tracking-[0.35em]">Ebonyi Farm Market</p>
+                <p class="text-slate-900 text-sm sm:text-base font-medium">Preparing your storefront experience</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Experience -->
+    <div id="welcome-overlay" class="fixed inset-0 z-[70] bg-slate-950/80 backdrop-blur-md">
+        <div class="min-h-screen grid grid-cols-1 lg:grid-cols-2">
+            <div class="relative overflow-hidden bg-gradient-to-br from-brand-950 via-emerald-900 to-slate-950 text-white p-6 sm:p-12 flex flex-col justify-between">
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.25),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(34,197,94,0.35),_transparent_30%)]"></div>
+                <div class="relative">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold uppercase tracking-[0.2em]">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        Ebonyi Farm Market Access
+                    </div>
+                    <h1 class="mt-8 text-3xl sm:text-5xl font-black leading-tight">Your Ebonyi farm market, made simple.</h1>
+                    <p class="mt-6 max-w-xl text-sm sm:text-base text-emerald-50/85 leading-relaxed">
+                        Browse as a guest or sign in as a shopper to manage your cart, checkout details, and orders with ease.
+                    </p>
+                    <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl">
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                            <div class="text-2xl font-black">Live</div>
+                            <p class="text-xs text-emerald-50/75 mt-1">Products update the storefront instantly.</p>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                            <div class="text-2xl font-black">Tracked</div>
+                            <p class="text-xs text-emerald-50/75 mt-1">Every checkout becomes a transaction record.</p>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+                            <div class="text-2xl font-black">Simple</div>
+                            <p class="text-xs text-emerald-50/75 mt-1">Move from welcome to browsing or checkout in a few clicks.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative text-xs text-emerald-50/75">
+                    Guest browsing and shopper sign-in are both available from this page.
+                </div>
+            </div>
+            <div class="bg-white dark:bg-slate-900 p-6 sm:p-12 flex items-center">
+                <div class="w-full max-w-xl mx-auto space-y-6">
+                    <div>
+                        <span class="text-xs font-bold text-brand-600 uppercase tracking-[0.2em]">Choose Access</span>
+                        <h2 class="mt-3 text-3xl font-black">Start from the welcome page</h2>
+                        <p class="mt-3 text-sm text-slate-500 dark:text-slate-400">
+                            Guests can browse immediately. Signed-in shoppers get a saved identity for checkout and faster repeat orders.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <button id="welcome-guest-btn" onclick="enterStoreAsGuest()" class="rounded-2xl border border-slate-200 dark:border-slate-700 p-5 text-left hover:border-brand-500 hover:bg-brand-50 dark:hover:bg-brand-950/30 transition">
+                            <i data-lucide="store" class="w-6 h-6 text-brand-600"></i>
+                            <h3 class="mt-4 font-bold">Continue as Guest</h3>
+                            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Open the storefront without signing in.</p>
+                        </button>
+                        <button id="welcome-login-btn" onclick="openAuthModal('login')" class="rounded-2xl border border-slate-200 dark:border-slate-700 p-5 text-left hover:border-brand-500 hover:bg-brand-50 dark:hover:bg-brand-950/30 transition">
+                            <i data-lucide="log-in" class="w-6 h-6 text-brand-600"></i>
+                            <h3 class="mt-4 font-bold">Login</h3>
+                            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Sign in to continue as a shopper.</p>
+                        </button>
+                        <button id="welcome-register-btn" onclick="openAuthModal('register')" class="rounded-2xl border border-slate-200 dark:border-slate-700 p-5 text-left hover:border-brand-500 hover:bg-brand-50 dark:hover:bg-brand-950/30 transition">
+                            <i data-lucide="user-plus" class="w-6 h-6 text-brand-600"></i>
+                            <h3 class="mt-4 font-bold">Create Account</h3>
+                            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">Register a shopper profile in this browser.</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/65 z-[75] backdrop-blur-xs flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-md shadow-2xl border border-slate-100 dark:border-slate-800 overflow-hidden transform scale-95 transition-transform duration-300">
+            <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                    <p class="text-xs uppercase tracking-[0.2em] font-bold text-brand-600">Account Access</p>
+                    <h3 id="auth-modal-title" class="text-2xl font-black mt-1">Login</h3>
+                </div>
+                <button type="button" onclick="closeAuthModal()" class="p-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="flex gap-2 bg-slate-100 dark:bg-slate-800 p-1 rounded-2xl mb-6">
+                    <button type="button" id="auth-tab-login" onclick="switchAuthMode('login')" class="flex-1 py-2 rounded-xl text-sm font-bold bg-white dark:bg-slate-900 shadow-sm">Login</button>
+                    <button type="button" id="auth-tab-register" onclick="switchAuthMode('register')" class="flex-1 py-2 rounded-xl text-sm font-bold text-slate-500 dark:text-slate-400">Create Account</button>
+                </div>
+
+                <form id="auth-login-form" class="space-y-4" onsubmit="handleLogin(event)">
+                    <div id="login-form-status" class="hidden rounded-2xl border px-4 py-3 text-xs font-semibold"></div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Email or Username</label>
+                        <input id="login-email" type="text" required placeholder="Enter email or username" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Password</label>
+                        <div class="relative">
+                            <input id="login-password" type="password" required placeholder="Enter password" class="w-full px-4 py-3 pr-12 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                            <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute inset-y-0 right-0 flex items-center px-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition" aria-label="Show password">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4">
+                        Sign in with your shopper account to continue to checkout.
+                    </div>
+                    <button type="submit" id="auth-login-submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl transition">Login</button>
+                </form>
+
+                <form id="auth-register-form" class="space-y-4 hidden" onsubmit="handleRegister(event)">
+                    <div id="register-form-status" class="hidden rounded-2xl border px-4 py-3 text-xs font-semibold"></div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Full Name</label>
+                        <input id="register-name" type="text" required placeholder="Jane Shopper" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Phone Number</label>
+                        <input id="register-phone" type="tel" required inputmode="tel" autocomplete="tel" pattern="[0-9+()\\-\\s]{7,20}" placeholder="+1 (555) 019-2834" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Email</label>
+                        <input id="register-email" type="email" required placeholder="jane@example.com" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Password</label>
+                        <div class="relative">
+                            <input id="register-password" type="password" required minlength="8" autocomplete="new-password" placeholder="Create password" class="w-full px-4 py-3 pr-12 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                            <button type="button" onclick="togglePasswordVisibility('register-password', this)" class="absolute inset-y-0 right-0 flex items-center px-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition" aria-label="Show password">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <p id="register-password-hint" class="mt-2 text-xs text-slate-500">Use at least 8 characters with uppercase, lowercase, number, and special character.</p>
+                    </div>
+                    <button type="submit" id="auth-register-submit" class="w-full py-3 bg-slate-900 hover:bg-slate-800 dark:bg-brand-600 dark:hover:bg-brand-700 text-white font-bold rounded-xl transition">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between gap-3 min-h-[4rem] sm:h-20 py-3 sm:py-0 flex-wrap">
+                
+                <!-- Logo -->
+                <div class="flex items-center gap-2 cursor-pointer" onclick="resetFilters()">
+                    <div class="bg-brand-600 text-white p-2 rounded-xl shadow-lg shadow-brand-500/20">
+                        <i data-lucide="shopping-basket" class="w-6 h-6 sm:w-7 sm:h-7"></i>
+                    </div>
+                    <span class="text-lg sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-brand-600 to-emerald-500 bg-clip-text text-transparent">Ebonyi Farm Market</span>
+                </div>
+
+                <!-- Desktop Navigation Search & Fast Filter -->
+                <div class="hidden md:flex items-center flex-1 max-w-md mx-8">
+                    <div class="relative w-full">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <i data-lucide="search" class="w-5 h-5"></i>
+                        </div>
+                        <input type="text" id="desktop-search" oninput="handleSearch(this.value)" placeholder="Search rice, yam, vegetables, and more..."
+                            class="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border border-transparent focus:border-brand-500 focus:bg-white dark:focus:bg-slate-950 focus:ring-2 focus:ring-brand-500/20 rounded-xl outline-none transition-all duration-200 text-sm">
+                    </div>
+                </div>
+
+                <!-- Action Buttons: Dark Mode, Budget Planner, Cart -->
+                <div class="flex items-center justify-end flex-wrap gap-2 sm:gap-4 w-full sm:w-auto">
+                    <div id="user-chip" class="hidden lg:flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        <span id="user-chip-label">Guest</span>
+                    </div>
+
+                    <button id="header-login-btn" onclick="openAuthModal('login')" class="hidden sm:flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-3 py-2 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        <i data-lucide="log-in" class="w-4 h-4"></i>
+                        <span>Login</span>
+                    </button>
+
+                    <a id="header-admin-btn" href="./admin.html" class="hidden items-center gap-2 text-sm font-semibold text-white bg-slate-900 dark:bg-brand-600 px-3 py-2 rounded-xl hover:bg-slate-800 dark:hover:bg-brand-700 transition">
+                        <i data-lucide="shield" class="w-4 h-4"></i>
+                        <span>Admin Panel</span>
+                    </a>
+
+                    <button id="header-logout-btn" onclick="logoutUser()" class="hidden sm:flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-3 py-2 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        <span>Logout</span>
+                    </button>
+
+                    <!-- Light/Dark Mode Switcher -->
+                    <button onclick="toggleDarkMode()" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition" title="Toggle Theme">
+                        <i id="theme-icon-light" data-lucide="sun" class="w-5 h-5 hidden"></i>
+                        <i id="theme-icon-dark" data-lucide="moon" class="w-5 h-5"></i>
+                    </button>
+
+                    <!-- Budget Planner Shortcut -->
+                    <a href="#budget-planner-section" class="hidden sm:flex items-center gap-2 text-sm font-semibold text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/40 px-3 py-2 rounded-xl hover:bg-brand-100 dark:hover:bg-brand-900/30 transition">
+                        <i data-lucide="calculator" class="w-4 h-4"></i>
+                        <span>Budget Kit</span>
+                    </a>
+
+                    <!-- Cart Trigger Button -->
+                    <button onclick="toggleCartDrawer(true)" class="relative p-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-brand-100 dark:hover:bg-brand-900/30 hover:text-brand-600 dark:hover:text-brand-400 text-slate-800 dark:text-slate-100 rounded-xl transition-all shadow-sm">
+                        <i data-lucide="shopping-cart" class="w-5.5 h-5.5 sm:w-6 sm:h-6"></i>
+                        <span id="cart-count-badge" class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 scale-0 transition-transform duration-300">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search Bar (Only visible on small displays) -->
+            <div class="md:hidden pb-4">
+                <div class="relative w-full">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                    </div>
+                    <input type="text" id="mobile-search" oninput="handleSearch(this.value)" placeholder="Search essentials & provisions..." 
+                        class="w-full pl-9 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border border-transparent focus:border-brand-500 focus:bg-white dark:focus:bg-slate-950 rounded-xl outline-none text-sm transition-all">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section with Slides / Features -->
+        <section class="relative bg-gradient-to-b from-brand-50 via-slate-50 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-900 py-8 sm:py-16 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Left Hero Copy -->
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <span class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-semibold bg-brand-100 dark:bg-brand-950/80 text-brand-800 dark:text-brand-300">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Fresh Provisions & Household Essentials Delivered
+                        </span>
+                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                            Farm-fresh finds for <span class="bg-gradient-to-r from-brand-600 to-emerald-500 bg-clip-text text-transparent">the everyday table</span>
+                        </h1>
+                        <p class="text-lg text-slate-600 dark:text-slate-300 max-w-xl mx-auto lg:mx-0">
+                            Stock up your pantry, kitchen, and bathroom shelves with fresh, reliable products. High quality, amazing bulk savings, and fast lightning delivery.
+                        </p>
+                        
+                        <!-- Fast Features Grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-left max-w-md mx-auto lg:mx-0">
+                            <div class="p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50">
+                                <i data-lucide="truck" class="w-6 h-6 text-brand-600 mb-2"></i>
+                                <h4 class="font-bold text-xs sm:text-sm">Express Post</h4>
+                                <p class="text-[10px] sm:text-xs text-slate-400">Under 2 hours</p>
+                            </div>
+                            <div class="p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50">
+                                <i data-lucide="badge-percent" class="w-6 h-6 text-amber-500 mb-2"></i>
+                                <h4 class="font-bold text-xs sm:text-sm">Great Deals</h4>
+                                <p class="text-[10px] sm:text-xs text-slate-400">Up to 30% Off</p>
+                            </div>
+                            <div class="p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50">
+                                <i data-lucide="shield-check" class="w-6 h-6 text-blue-500 mb-2"></i>
+                                <h4 class="font-bold text-xs sm:text-sm">Verified Brand</h4>
+                                <p class="text-[10px] sm:text-xs text-slate-400">100% Genuine</p>
+                            </div>
+                        </div>
+
+                        <!-- Hero Actions -->
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                            <a href="#provisions-catalog" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-lg shadow-brand-500/20 transition-all flex items-center gap-2">
+                                Shop Storefront <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#budget-planner-section" class="px-6 py-3 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 font-semibold rounded-xl transition flex items-center gap-2">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-brand-500"></i> Smart Budget Builder
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Interactive Showcase Banner -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-brand-300/20 to-emerald-300/10 rounded-3xl blur-2xl"></div>
+                        <div class="relative bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-700/70">
+                            <!-- Showcase Carousel Banner element -->
+                            <div id="hero-promo-card">
+                                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800" 
+                                     alt="Pantry Provisions" id="hero-image" class="w-full h-56 sm:h-64 object-cover rounded-2xl mb-4 transition-all duration-500"
+                                     onerror="this.src='https://placehold.co/800x600/16a34a/ffffff?text=Premium+Provisions'">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <span class="text-xs font-bold text-brand-600 tracking-wider uppercase">Weekly Combo Deal</span>
+                                        <h3 class="text-lg font-bold">Breakfast Starter Bundle</h3>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Oats, Powdered Milk, Cocoa & Honey</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-sm line-through text-slate-400 block">$24.50</span>
+                                        <span class="text-xl font-extrabold text-brand-600">$18.99</span>
+                                    </div>
+                                </div>
+                                <button onclick="addBundleToCart()" class="w-full mt-4 py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-brand-600 dark:hover:bg-brand-700 text-white font-medium rounded-xl transition-all flex items-center justify-center gap-2">
+                                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> Add Bundle to Basket
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Provisions Catalog Section -->
+        <section id="provisions-catalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-mt-20">
+            
+            <!-- Section Header & Filter controls -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+                <div>
+                    <h2 class="text-3xl font-extrabold tracking-tight">Explore Ebonyi Farm Produce</h2>
+                    <p class="text-slate-500 dark:text-slate-400 mt-1">Fresh grains, tubers, legumes, vegetables, fruits, and palm produce from local farms.</p>
+                </div>
+
+                <!-- Custom Grid View / List View Toggles (Optional design elements) -->
+                    <div class="flex flex-wrap items-center gap-2 self-start md:self-auto">
+                    <span class="text-xs text-slate-400 mr-2">Sort by price:</span>
+                    <select id="sort-selector" onchange="sortProducts()" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 text-sm outline-none focus:border-brand-500">
+                        <option value="default">Featured Farm Produce</option>
+                        <option value="low-high">Price: Low to High</option>
+                        <option value="high-low">Price: High to Low</option>
+                        <option value="rating">Top Rated</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Categories Filter Badges Slider -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 -mx-4 px-4 scrollbar-thin">
+                <button onclick="setCategoryFilter('all')" class="category-btn active px-4 py-2 bg-brand-600 text-white text-sm font-semibold rounded-full whitespace-nowrap transition-all shadow-sm">
+                    All Farm Produce
+                </button>
+                <button onclick="setCategoryFilter('grains')" class="category-btn px-4 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-full whitespace-nowrap transition-all">
+                    🌾 Grains
+                </button>
+                <button onclick="setCategoryFilter('tubers')" class="category-btn px-4 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-full whitespace-nowrap transition-all">
+                    Yam & Tubers
+                </button>
+                <button onclick="setCategoryFilter('legumes')" class="category-btn px-4 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-full whitespace-nowrap transition-all">
+                    Beans & Legumes
+                </button>
+                <button onclick="setCategoryFilter('vegetables')" class="category-btn px-4 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-full whitespace-nowrap transition-all">
+                    Vegetables
+                </button>
+                <button onclick="setCategoryFilter('fruits')" class="category-btn px-4 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-full whitespace-nowrap transition-all">
+                    Fruits
+                </button>
+                <button onclick="setCategoryFilter('palm')" class="category-btn px-4 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-full whitespace-nowrap transition-all">
+                    Palm Produce
+                </button>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <!-- Products dynamically rendered by script -->
+            </div>
+
+            <!-- Empty Search Results Placeholder -->
+            <div id="no-results" class="hidden text-center py-20 bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-dashed border-slate-200 dark:border-slate-700 mt-6">
+                <i data-lucide="package-search" class="w-16 h-16 mx-auto text-slate-300 mb-4"></i>
+                <h3 class="text-xl font-bold">No provisions found</h3>
+                <p class="text-slate-400 text-sm mt-1">Try adjusting your filters or search keywords.</p>
+                <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-brand-600 text-white rounded-xl text-sm font-semibold">Clear Filters</button>
+            </div>
+        </section>
+
+        <!-- Interactive Budget Planner Tool Section -->
+        <section id="budget-planner-section" class="bg-gradient-to-br from-brand-900 to-emerald-950 text-white py-16 scroll-mt-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Text Info -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <div class="inline-flex items-center gap-1 bg-brand-800 px-3 py-1 rounded-full text-xs font-semibold text-brand-200">
+                            <i data-lucide="calculator" class="w-3.5 h-3.5"></i> Smart Shopper Tool
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Farm Produce Budget Builder</h2>
+                        <p class="text-brand-200 leading-relaxed">
+                            Set a budget and build a practical basket of locally grown staples and fresh produce for your household.
+                        </p>
+                        <ul class="space-y-2 text-sm text-brand-100/90 pt-2">
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Combines grains, legumes, tubers, and fresh produce.</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Maximize item coverage within your target price.</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i> Fully customizable after insertion.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Interactive Tool Box -->
+                    <div class="lg:col-span-7 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 rounded-full blur-2xl"></div>
+                        <h3 class="text-xl font-extrabold mb-6 flex items-center gap-2">
+                            <span>Configure Your Starter Kit</span>
+                        </h3>
+                        
+                        <div class="space-y-6">
+                            <!-- Budget Slider -->
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="text-sm font-semibold text-slate-500 dark:text-slate-400">Select Budget Amount</label>
+                                    <span class="text-2xl font-black text-brand-600 dark:text-brand-400" id="budget-value-display">$40</span>
+                                </div>
+                                <input type="range" id="budget-range" min="15" max="100" value="40" step="5" oninput="updateBudgetSlider(this.value)"
+                                    class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-600">
+                                <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                                    <span>$15 (Farm Produce Starter Basket)</span>
+                                    <span>$100 (Full Pantry Restock)</span>
+                                </div>
+                            </div>
+
+                            <!-- Preview of Items Included in Plan -->
+                            <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
+                                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Estimated Farm Produce Basket</h4>
+                                <div id="budget-preview-list" class="space-y-2">
+                                    <!-- Dynamic elements from slider script -->
+                                </div>
+                            </div>
+
+                            <!-- CTA Button -->
+                            <button onclick="applyBudgetKit()" class="w-full py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl shadow-lg shadow-brand-500/20 transition flex items-center justify-center gap-2">
+                                <i data-lucide="shopping-bag" class="w-5 h-5"></i> Generate & Add Selected Kit to Cart
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <details class="group rounded-[2rem] border border-slate-200/70 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 shadow-lg overflow-hidden">
+                <summary class="ebonyi-farm-market-review-summary list-none cursor-pointer select-none px-6 sm:px-8 py-5 bg-slate-50/95 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center justify-between gap-4">
+                    <div class="text-left">
+                        <span class="text-xs font-bold text-brand-600 uppercase tracking-wider">Pantry Reviews</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mt-1">Loved by thousands of students, families and remote workers</h2>
+                    </div>
+                    <div class="flex items-center gap-3 shrink-0">
+                        <span class="ebonyi-farm-market-review-toggle-closed hidden sm:inline-flex items-center rounded-full bg-brand-50 dark:bg-brand-950/40 px-3 py-1 text-xs font-bold text-brand-600 dark:text-brand-400">
+                            Tap to show
+                        </span>
+                        <span class="ebonyi-farm-market-review-toggle-open hidden sm:inline-flex items-center rounded-full bg-slate-200 dark:bg-slate-700 px-3 py-1 text-xs font-bold text-slate-600 dark:text-slate-300">
+                            Tap to hide
+                        </span>
+                        <i data-lucide="chevron-down" class="ebonyi-farm-market-review-chevron h-5 w-5 text-slate-400 transition-transform duration-300"></i>
+                    </div>
+                </summary>
+
+                <div class="ebonyi-farm-market-review-panel px-6 sm:px-8 pb-8 pt-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Testimonial 1 -->
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                            <div class="flex items-center gap-1 text-amber-500 mb-4">
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                            </div>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm italic mb-6">"Ebonyi Farm Market is a total lifesaver. Being able to buy chocolate beverage, cookies, and soap in a single shop without having to drag heavy grocery bags is phenomenal."</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-brand-100 dark:bg-brand-900 flex items-center justify-center font-bold text-brand-700 text-sm">AM</div>
+                                <div>
+                                    <h4 class="font-bold text-sm">Amanda Miller</h4>
+                                    <p class="text-xs text-slate-400">Regular Customer</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 2 -->
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                            <div class="flex items-center gap-1 text-amber-500 mb-4">
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                            </div>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm italic mb-6">"The unique budget toolkit is amazing! I configured exactly $45 of essentials with one tap, and it instantly curated food items that matched. Saved me an hour of planning."</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-950/40 flex items-center justify-center font-bold text-amber-700 text-sm">DK</div>
+                                <div>
+                                    <h4 class="font-bold text-sm">David K.</h4>
+                                    <p class="text-xs text-slate-400">Campus Resident</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Testimonial 3 -->
+                        <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+                            <div class="flex items-center gap-1 text-amber-500 mb-4">
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                <i data-lucide="star" class="w-4 h-4 text-slate-300 dark:text-slate-600"></i>
+                            </div>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm italic mb-6">"Ultra fast home delivery, friendly packaging and the provisions are authentic. Their dark cocoa powder and premium whole grains are great quality."</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-950/40 flex items-center justify-center font-bold text-emerald-700 text-sm">SL</div>
+                                <div>
+                                    <h4 class="font-bold text-sm">Sarah Lewis</h4>
+                                    <p class="text-xs text-slate-400">Home Cook</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </section>
+
+    </main>
+
+    <!-- Shopping Cart Slide-out Drawer Panel -->
+    <div id="cart-drawer-overlay" class="fixed inset-0 bg-black/50 z-50 backdrop-blur-xs transition-opacity duration-300 opacity-0 pointer-events-none" onclick="toggleCartDrawer(false)">
+        <div id="cart-drawer" class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl flex flex-col translate-x-full transition-transform duration-300 cursor-default" onclick="event.stopPropagation()">
+            
+            <!-- Drawer Header -->
+            <div class="p-4 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-900/50">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shopping-basket" class="w-5 h-5 text-brand-600"></i>
+                    <h3 class="text-lg font-bold">Shopping Basket</h3>
+                    <span id="cart-count-badge-drawer" class="bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 text-xs font-bold px-2 py-0.5 rounded-full">0 items</span>
+                    <button type="button" onclick="openBasketHistory()" class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-slate-700 px-2.5 py-1 text-xs font-bold text-slate-500 hover:border-brand-500 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400 transition">
+                        <i data-lucide="history" class="w-3.5 h-3.5"></i>
+                        <span>History</span>
+                    </button>
+                </div>
+                <button onclick="toggleCartDrawer(false)" class="p-2 text-slate-400 hover:text-slate-800 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Drawer Body / Item List -->
+            <div class="flex-grow overflow-y-auto p-4 sm:p-6 space-y-4" id="cart-items-container">
+                <!-- Cart list entries will inject dynamically -->
+            </div>
+
+            <!-- Drawer Footer Summary -->
+            <div class="p-4 sm:p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+                
+                <!-- Coupon Code Entry -->
+                <div class="mb-4">
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Have a promo code?</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="coupon-input" placeholder="FARM10" class="flex-grow px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm uppercase outline-none focus:border-brand-500">
+                        <button onclick="applyCoupon()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 text-white font-semibold text-sm rounded-lg transition">Apply</button>
+                    </div>
+                    <div id="coupon-status" class="text-xs mt-1 hidden"></div>
+                </div>
+
+                <!-- Price Calculator Grid -->
+                <div class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                    <div class="flex justify-between">
+                        <span>Pantry Subtotal</span>
+                        <span id="cart-subtotal" class="font-medium text-slate-800 dark:text-slate-100">$0.00</span>
+                    </div>
+                    <div class="flex justify-between text-brand-600 dark:text-brand-400 hidden" id="cart-discount-row">
+                        <span>Promo Code Discount</span>
+                        <span id="cart-discount">-$0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Handling & Delivery</span>
+                        <span id="cart-delivery" class="font-medium text-slate-800 dark:text-slate-100">$2.50</span>
+                    </div>
+                    <div class="flex justify-between text-slate-800 dark:text-slate-100 font-extrabold text-base pt-2 border-t border-dashed border-slate-200 dark:border-slate-800">
+                        <span>Total Due</span>
+                        <span id="cart-total">$0.00</span>
+                    </div>
+                </div>
+
+                <!-- Checkout CTAs -->
+                <div class="mt-6 space-y-2">
+                    <button onclick="openCheckoutModal()" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-brand-500/10 transition flex items-center justify-center gap-2">
+                        Proceed to Checkout <i data-lucide="credit-card" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="clearCart()" class="w-full py-2 bg-transparent hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-400 hover:text-red-500 text-xs font-semibold rounded-lg transition">
+                        Clear Basket Items
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Order History Full Page -->
+    <div id="basket-history-page" class="fixed inset-0 z-[60] bg-white dark:bg-slate-950 opacity-0 pointer-events-none transition-opacity duration-300 flex flex-col">
+        <div class="border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <button type="button" onclick="closeBasketHistory()" class="p-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-900 dark:hover:text-white transition" aria-label="Close history">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    </button>
+                    <div class="min-w-0">
+                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Order History</p>
+                        <h2 class="text-xl sm:text-2xl font-black truncate">Items you ordered</h2>
+                    </div>
+                </div>
+                <button type="button" onclick="clearBasketHistory()" class="inline-flex items-center gap-2 rounded-xl bg-slate-900 dark:bg-slate-800 px-3 py-2 text-xs sm:text-sm font-bold text-white hover:bg-red-600 transition">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    <span>Clear My History</span>
+                </button>
+            </div>
+        </div>
+        <main class="flex-1 overflow-y-auto">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+                <div id="basket-history-summary" class="mb-5 grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
+                <div id="basket-history-list" class="space-y-3"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Multi-Step Interactive Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 bg-black/65 z-50 backdrop-blur-xs flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-lg shadow-2xl border border-slate-100 dark:border-slate-800 flex flex-col max-h-[90vh] overflow-hidden transform scale-95 transition-transform duration-300">
+            
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <h3 class="text-xl font-extrabold">Complete Delivery Request</h3>
+                <button onclick="closeCheckoutModal()" class="p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content & Forms -->
+            <div class="p-6 overflow-y-auto space-y-6 flex-grow">
+                
+                <!-- Checkout Progress Steps Indicators -->
+                <div class="flex items-center justify-between text-xs font-bold text-slate-400 relative">
+                    <div class="absolute h-0.5 bg-slate-200 dark:bg-slate-800 left-8 right-8 top-3.5 z-0"></div>
+                    <div id="checkout-line-progress" class="absolute h-0.5 bg-brand-500 left-8 w-0 top-3.5 z-0 transition-all duration-300"></div>
+                    
+                    <div class="z-10 text-center flex flex-col items-center gap-1.5">
+                        <span id="step-1-badge" class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center text-sm">1</span>
+                        <span class="text-brand-600 font-semibold" id="step-1-label">Contact</span>
+                    </div>
+                    <div class="z-10 text-center flex flex-col items-center gap-1.5">
+                        <span id="step-2-badge" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-sm">2</span>
+                        <span id="step-2-label">Payment</span>
+                    </div>
+                    <div class="z-10 text-center flex flex-col items-center gap-1.5">
+                        <span id="step-3-badge" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-sm">3</span>
+                        <span id="step-3-label">Finished</span>
+                    </div>
+                </div>
+                <div id="checkout-form-status" class="hidden rounded-2xl border px-4 py-3 text-xs font-semibold"></div>
+
+                <!-- STEP 1 FORM: Customer Shipping & Details -->
+                <form id="checkout-form-step-1" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Full Name</label>
+                            <input type="text" required id="cust-name" placeholder="John Doe" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Phone Line</label>
+                            <input type="tel" required id="cust-phone" inputmode="tel" autocomplete="tel" pattern="[0-9+()\\-\\s]{7,20}" placeholder="+1 (555) 019-2834" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Pantry Delivery Address</label>
+                        <input type="text" required id="cust-address" placeholder="Room 402, Oakwood Dorms or Street block" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Special Instructions (Optional)</label>
+                        <textarea id="cust-notes" placeholder="e.g. Leave with dorm warden, ring bell twice" rows="2" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500"></textarea>
+                    </div>
+                </form>
+
+                <!-- STEP 2 FORM: Simulating Credit Card / Pay on Delivery Option -->
+                <form id="checkout-form-step-2" class="space-y-4 hidden">
+                    <div class="p-4 bg-slate-50 dark:bg-slate-800/80 rounded-2xl border border-slate-200/50 dark:border-slate-700 flex flex-col gap-3">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="radio" name="payment-method" value="pod" checked class="w-4 h-4 text-brand-600 accent-brand-600" onchange="toggleCardInputs(false)">
+                            <div>
+                                <h4 class="font-bold text-sm">Pay on Delivery / Cash / Cashless Transfer</h4>
+                                <p class="text-xs text-slate-400">Pay directly when rider drops off provisions.</p>
+                            </div>
+                        </label>
+                        <hr class="border-slate-200 dark:border-slate-700">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="radio" name="payment-method" value="card" class="w-4 h-4 text-brand-600 accent-brand-600" onchange="toggleCardInputs(true)">
+                            <div>
+                                <h4 class="font-bold text-sm">Credit / Debit Card</h4>
+                                <p class="text-xs text-slate-400">Securely check out right now.</p>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div id="card-details-fields" class="space-y-4 hidden">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Cardholder Name</label>
+                            <input type="text" id="card-holder" autocomplete="cc-name" placeholder="John Doe" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Card Number</label>
+                            <input type="text" id="card-num" inputmode="numeric" autocomplete="cc-number" maxlength="19" placeholder="4242 4242 4242 4242" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">Expiry</label>
+                                <input type="text" id="card-expiry" inputmode="numeric" autocomplete="cc-exp" maxlength="5" placeholder="MM/YY" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-1.5">CVC/CVV</label>
+                                <input type="password" id="card-cvv" inputmode="numeric" autocomplete="cc-csc" maxlength="3" placeholder="123" class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm outline-none focus:border-brand-500">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- STEP 3 RESULT: Success & Digital Receipt Preview -->
+                <div id="checkout-form-step-3" class="space-y-6 hidden">
+                    <div class="text-center space-y-2">
+                        <div class="w-16 h-16 bg-brand-100 dark:bg-brand-950 text-brand-600 rounded-full flex items-center justify-center mx-auto text-3xl animate-bounce">
+                            🎉
+                        </div>
+                        <h3 class="text-xl font-extrabold text-brand-600 dark:text-brand-400">Provision Delivery Ordered!</h3>
+                        <p class="text-xs text-slate-400">Order ID: <span id="receipt-order-id" class="font-mono">#PVG-59281</span></p>
+                    </div>
+
+                    <!-- Digital Printable Receipt Box -->
+                    <div class="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl font-mono text-xs text-slate-600 dark:text-slate-300 relative">
+                        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-500 to-amber-500"></div>
+                        <div class="text-center font-bold mb-4 uppercase tracking-widest pt-2">Ebonyi Farm Market Receipt Summary</div>
+                        <div class="space-y-1.5 mb-4 pb-4 border-b border-dashed border-slate-300 dark:border-slate-800">
+                            <p>Customer: <span id="rec-cust-name" class="font-bold"></span></p>
+                            <p>Contact: <span id="rec-cust-phone"></span></p>
+                            <p>Address: <span id="rec-cust-addr" class="font-bold"></span></p>
+                            <p>Paid via: <span id="rec-pay-method" class="font-bold uppercase text-brand-600"></span></p>
+                        </div>
+                        <div id="rec-items-list" class="space-y-1.5 pb-4 mb-4 border-b border-dashed border-slate-300 dark:border-slate-800">
+                            <!-- Items List -->
+                        </div>
+                        <div class="space-y-1 text-right">
+                            <p>Subtotal: <span id="rec-subtotal" class="font-bold"></span></p>
+                            <p>Promo Code Discount: <span id="rec-discount" class="text-brand-600 font-bold"></span></p>
+                            <p>Delivery: <span id="rec-delivery" class="font-bold"></span></p>
+                            <p class="text-sm font-bold text-slate-900 dark:text-white pt-1">Total Bill: <span id="rec-total"></span></p>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button onclick="printReceiptMock()" class="text-xs text-brand-600 dark:text-brand-400 hover:underline flex items-center justify-center gap-1 mx-auto">
+                            <i data-lucide="printer" class="w-3.5 h-3.5"></i> Simulated Print Receipt
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal Action Buttons Footer -->
+            <div class="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 flex flex-col sm:flex-row gap-4">
+                <button id="checkout-back-btn" onclick="handleCheckoutBack()" class="flex-1 py-3 bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 font-bold rounded-xl transition text-sm">
+                    Back
+                </button>
+                <button id="checkout-next-btn" onclick="handleCheckoutNext()" class="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-brand-500/10 transition text-sm flex items-center justify-center gap-2">
+                    <span>Continue</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Product Detail Modal (Dynamic) -->
+    <div id="detail-modal" class="fixed inset-0 bg-black/60 z-50 backdrop-blur-xs flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-lg shadow-2xl border border-slate-100 dark:border-slate-800 flex flex-col max-h-[85vh] overflow-hidden transform scale-95 transition-transform duration-300">
+            <!-- Close Button Header -->
+            <div class="absolute right-4 top-4 z-10">
+                <button onclick="closeDetailModal()" class="p-1.5 bg-black/40 text-white hover:bg-black/60 rounded-full transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <!-- Modal Banner Image -->
+            <div class="relative h-52 sm:h-64">
+                <img id="detail-img" class="w-full h-full object-cover" src="" alt="Provision item" onerror="this.src='https://placehold.co/800x600/16a34a/ffffff?text=Provision+Details'">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+                    <div>
+                        <span id="detail-badge" class="px-2.5 py-1 bg-brand-600 text-white font-bold text-xs rounded-md uppercase tracking-wider inline-block mb-2">Category</span>
+                        <h3 id="detail-title" class="text-xl sm:text-2xl font-black text-white">Item Brand</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- Description Content -->
+            <div class="p-6 overflow-y-auto space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span id="detail-price" class="text-2xl font-black text-brand-600 dark:text-brand-400">$0.00</span>
+                        <span id="detail-discount" class="text-xs line-through text-slate-400 ml-2"></span>
+                    </div>
+                    <!-- Rating representation -->
+                    <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-500 fill-amber-500"></i>
+                        <span id="detail-rating" class="text-xs font-bold">4.8</span>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Product Description</h4>
+                    <p id="detail-desc" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"></p>
+                </div>
+                <!-- Specification attributes -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-50 dark:bg-slate-800/40 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
+                    <div>
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Storage Condition</span>
+                        <span id="detail-storage" class="text-xs font-semibold">Store in dry cool space</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">Authenticity</span>
+                        <span class="text-xs font-semibold text-emerald-600 flex items-center gap-1">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5 inline"></i> Verified Brand
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- Add to basket button panel -->
+            <div class="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 flex flex-col gap-4">
+                <button id="detail-add-btn" class="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-brand-500/10 transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i> Add to Provision Basket
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                
+                <!-- Logo brand summary -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-brand-600 text-white p-2 rounded-lg">
+                            <i data-lucide="shopping-basket" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">Ebonyi Farm Market</span>
+                    </div>
+                    <p class="text-sm text-slate-500">Premium quality daily provisions, household goods, breakfast staples, beverages, and personal toiletries direct to your room, apartment or workplace.</p>
+                </div>
+
+                <!-- Fast Categories -->
+                <div>
+                    <h4 class="text-white font-semibold text-sm mb-4">Pantry Categories</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#provisions-catalog" onclick="setCategoryFilter('grains')" class="hover:text-brand-500 transition">🌾 Grains</a></li>
+                        <li><a href="#provisions-catalog" onclick="setCategoryFilter('tubers')" class="hover:text-brand-500 transition">Yam & Tubers</a></li>
+                        <li><a href="#provisions-catalog" onclick="setCategoryFilter('legumes')" class="hover:text-brand-500 transition">Beans & Legumes</a></li>
+                        <li><a href="#provisions-catalog" onclick="setCategoryFilter('vegetables')" class="hover:text-brand-500 transition">Vegetables & Fruits</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Help -->
+                <div>
+                    <h4 class="text-white font-semibold text-sm mb-4">Customer Care</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-brand-500 transition">Delivery Terms</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Corporate Provision Boxes</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Restocking Schedule</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Support Center</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter Subscription form -->
+                <div class="space-y-4">
+                    <h4 class="text-white font-semibold text-sm mb-4">Stay Notified</h4>
+                    <p class="text-sm text-slate-500">Subscribe for custom deals, discounts and restocking reminders.</p>
+                    <form onsubmit="handleNewsletter(event)" class="flex gap-2">
+                        <input type="email" required placeholder="name@domain.com" class="bg-slate-800 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:border-brand-500 flex-grow">
+                        <button class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">Join</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Footer Baseline bar -->
+            <div class="border-t border-slate-800 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 Ebonyi Farm Market Provisions Store Ltd. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:underline">Privacy Policy</a>
+                    <a href="#" class="hover:underline">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC SYSTEM -->
+    <script type="text/plain" id="legacy-store-script">
+        // --- 1. Master Provisions Catalog Data ---
+        const products = [
+            {
+                id: 1,
+                title: "Premium Milo Cocoa Drink (Large)",
+                category: "beverages",
+                price: 8.99,
+                discountPrice: 10.50,
+                rating: 4.9,
+                description: "Delightful instant powdered chocolate beverage mix fortified with essential vitamins and minerals. Perfect for your morning energy routine.",
+                storage: "Store in cool dry cupboard",
+                image: "https://images.unsplash.com/photo-1541658016709-82535e94bc69?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            },
+            {
+                id: 2,
+                title: "Premium Basmati Rice (2kg Bag)",
+                category: "staples",
+                price: 12.50,
+                discountPrice: 15.00,
+                rating: 4.8,
+                description: "Aromatically rich, extra long slender grains of authentic Basmati rice. Perfectly aged to fluff beautifully with every cooking cycle.",
+                storage: "Keep in airtight dry container",
+                image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            },
+            {
+                id: 3,
+                title: "Full Cream Powdered Milk (Tin)",
+                category: "beverages",
+                price: 11.20,
+                discountPrice: null,
+                rating: 4.7,
+                description: "Rich, creamy, instant dissolving powdered dairy milk. Packed with high nutrients to complete your breakfast bowls and tea recipes.",
+                storage: "Keep lid tightly closed after opening",
+                image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            },
+            {
+                id: 4,
+                title: "Chocolate Chip Cookies (Family Pack)",
+                category: "snacks",
+                price: 4.25,
+                discountPrice: 5.50,
+                rating: 4.6,
+                description: "Crispy outer shells with gooey molten chocolate chips in every bite. Delicious quick munchies for study sessions or late night cravings.",
+                storage: "Keep in dark dry dry jar",
+                image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            },
+            {
+                id: 5,
+                title: "Hydrating Aloe Vera Bar Soap (4-Pack)",
+                category: "toiletries",
+                price: 5.80,
+                discountPrice: 6.99,
+                rating: 4.8,
+                description: "Skin cooling multi-bar bathing soaps enriched with fresh aloe juice extracts and micro moisturizers to guard sensitive skin.",
+                storage: "Store in ventilated soap box",
+                image: "https://images.unsplash.com/photo-1607006342440-b70098f21935?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            },
+            {
+                id: 6,
+                title: "Rolled Quick Oats (1.2kg)",
+                category: "staples",
+                price: 6.40,
+                discountPrice: null,
+                rating: 4.7,
+                description: "100% whole grain rolled oats. Highly nutritious and loaded with dietary fiber for long lasting stamina through your morning routines.",
+                storage: "Store in cool dry space",
+                image: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            },
+            {
+                id: 7,
+                title: "Canned Tomato Paste (Pack of 3)",
+                category: "dairy",
+                price: 3.50,
+                discountPrice: 4.20,
+                rating: 4.5,
+                description: "Rich, triple-concentrated red tomato paste. Adds brilliant deep color and tanginess to cooking sauces, stew dishes and pasta seasoning.",
+                storage: "Refrigerate unused portion once opened",
+                image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            },
+            {
+                id: 8,
+                title: "Crispy Potato Chips (Sea Salt)",
+                category: "snacks",
+                price: 2.99,
+                discountPrice: null,
+                rating: 4.4,
+                description: "Fresh, thinly-sliced garden potato kettle chips lightly dusted with premium fine sea salt grains. No artificial additives or fillers.",
+                storage: "Reseal tightly once packet is open",
+                image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            },
+            {
+                id: 9,
+                title: "Anti-Bacterial Cool Mint Toothpaste",
+                category: "toiletries",
+                price: 3.10,
+                discountPrice: 3.99,
+                rating: 4.9,
+                description: "Triple protection freshness toothpaste designed to eradicate bacteria, preserve tooth enamel health and give lasting cool icy-mint breathing.",
+                storage: "Do not expose to high temperatures",
+                image: "https://images.unsplash.com/photo-1559599141-383d837dbafb?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            },
+            {
+                id: 10,
+                title: "Herbal Green Tea Bags (50 bags)",
+                category: "beverages",
+                price: 4.99,
+                discountPrice: null,
+                rating: 4.7,
+                description: "Authentic steamed green tea leaves with soothing jasmine notes. Packed with rich antioxidants to refresh and detoxify naturally.",
+                storage: "Keep packets dry and safe from moisture",
+                image: "https://images.unsplash.com/photo-1597481499750-3e6b22637e12?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            },
+            {
+                id: 11,
+                title: "Quick-Cooking Instant Noodles (Pack of 10)",
+                category: "staples",
+                price: 5.50,
+                discountPrice: 6.50,
+                rating: 4.6,
+                description: "Extremely tasty, fast preparation curly instant dry wheat noodles. Complete with rich onion-chicken oil essence flavoring sachets.",
+                storage: "Keep in dry cupboard space",
+                image: "https://images.unsplash.com/photo-1612966608997-30dbd29319e8?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            },
+            {
+                id: 12,
+                title: "Salted Butter Spread (500g)",
+                category: "dairy",
+                price: 4.80,
+                discountPrice: 5.50,
+                rating: 4.8,
+                description: "Smooth, richly textured salted dairy churned butter. Ideal for spreading on bread toasts, or adding savory creaminess to bakery items.",
+                storage: "Must be kept refrigerated",
+                image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&q=80&w=400",
+                qtyInCart: 0
+            }
+        ];
+
+        // --- 2. Application Core State Management ---
+        let cart = [];
+        let activeCategoryFilter = "all";
+        let searchQueryString = "";
+        let activeSortRule = "default";
+        let promoDiscountPercent = 0;
+        let activePromoCode = "";
+        let checkoutPhase = 1;
+
+        // --- 3. App Initialization Hook ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Re-render Lucide icons dynamically 
+            lucide.createIcons();
+            
+            // Build initial grid & interactive budget plan views
+            renderProducts();
+            updateBudgetSlider(40);
+            
+            // Default check on Dark Mode theme setting
+            if (localStorage.getItem('theme') === 'dark' || 
+                (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-icon-light').classList.remove('hidden');
+                document.getElementById('theme-icon-dark').classList.add('hidden');
+            }
+        });
+
+        // Toggle Dark/Light Mode state
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            const lightIcon = document.getElementById('theme-icon-light');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            
+            if (isDark) {
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+                showToast("Dark theme enabled!", "moon");
+            } else {
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+                showToast("Light theme enabled!", "sun");
+            }
+        }
+
+        // Custom Toast Engine (to avoid using blocking 'alert()')
+        function showToast(message, iconName = "info", colorClass = "bg-slate-900 dark:bg-white text-white dark:text-slate-900") {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            // Configure Toast Styles
+            toast.className = `flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl transition-all duration-300 transform translate-y-5 opacity-0 ${colorClass}`;
+            toast.innerHTML = `
+                <i data-lucide="${iconName}" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="text-xs font-semibold leading-snug">${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            lucide.createIcons();
+            
+            // Force transition Reflow
+            setTimeout(() => {
+                toast.classList.remove('translate-y-5', 'opacity-0');
+            }, 10);
+            
+            // Dissolve notification after 3.2 seconds
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'scale-90');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3200);
+        }
+
+        // Rendering Products Grid based on state filters
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            const noResultsPlaceholder = document.getElementById('no-results');
+            
+            // Filter list items based on rules
+            let filtered = products.filter(p => {
+                const matchesCategory = activeCategoryFilter === 'all' || p.category === activeCategoryFilter;
+                const matchesSearch = p.title.toLowerCase().includes(searchQueryString.toLowerCase()) || 
+                                      p.description.toLowerCase().includes(searchQueryString.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            // Apply sort algorithms
+            if (activeSortRule === 'low-high') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (activeSortRule === 'high-low') {
+                filtered.sort((a, b) => b.price - a.price);
+            } else if (activeSortRule === 'rating') {
+                filtered.sort((a, b) => b.rating - a.rating);
+            }
+
+            // Clean previous cards
+            grid.innerHTML = "";
+            
+            if (filtered.length === 0) {
+                grid.classList.add('hidden');
+                noResultsPlaceholder.classList.remove('hidden');
+                return;
+            }
+
+            grid.classList.remove('hidden');
+            noResultsPlaceholder.classList.add('hidden');
+
+            // Construct new provision item elements
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "group bg-white dark:bg-slate-800 rounded-3xl p-4 sm:p-5 border border-slate-100 dark:border-slate-700/60 shadow-xs hover:shadow-xl hover:scale-[1.02] hover:border-brand-500/20 dark:hover:border-brand-500/20 transition-all duration-300 flex flex-col justify-between";
+                
+                // Discount Badge calculation
+                let discountBadge = "";
+                if (p.discountPrice) {
+                    const pct = Math.round(((p.discountPrice - p.price) / p.discountPrice) * 100);
+                    discountBadge = `<span class="absolute top-3 left-3 bg-red-500 text-white font-black text-[10px] px-2 py-0.5 rounded-md uppercase tracking-wider z-10">${pct}% OFF</span>`;
+                }
+
+                card.innerHTML = `
+                    <div class="relative overflow-hidden rounded-2xl mb-4 bg-slate-100 dark:bg-slate-900 aspect-square">
+                        ${discountBadge}
+                        <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.src='https://placehold.co/400x400/16a34a/ffffff?text=${encodeURIComponent(p.title)}'">
+                        <!-- Detailed preview quick trigger -->
+                        <button onclick="openDetailModal(${p.id})" class="absolute right-3 bottom-3 p-2 bg-white/95 hover:bg-white dark:bg-slate-800/95 text-slate-700 dark:text-slate-100 rounded-xl shadow-md opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all" title="View details">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-1.5 flex-grow mb-4">
+                        <span class="text-[10px] font-bold text-brand-600 dark:text-brand-400 tracking-wider uppercase">${p.category}</span>
+                        <h3 onclick="openDetailModal(${p.id})" class="font-extrabold text-sm sm:text-base leading-snug cursor-pointer hover:text-brand-600 transition line-clamp-2" title="${p.title}">${p.title}</h3>
+                        
+                        <!-- Ratings line -->
+                        <div class="flex items-center gap-1 text-slate-400 text-xs">
+                            <div class="flex items-center text-amber-500">
+                                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-500"></i>
+                            </div>
+                            <span class="font-bold text-slate-700 dark:text-slate-200">${p.rating}</span>
+                            <span>• Verified Review</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-50 dark:border-slate-700">
+                        <div>
+                            <span class="text-lg font-black text-brand-600 dark:text-brand-400">$${p.price.toFixed(2)}</span>
+                            ${p.discountPrice ? `<span class="text-xs line-through text-slate-400 block">$${p.discountPrice.toFixed(2)}</span>` : ''}
+                        </div>
+                        <button onclick="addToCart(${p.id})" class="p-2.5 bg-slate-100 hover:bg-brand-600 dark:bg-slate-700/60 dark:hover:bg-brand-600 text-slate-800 dark:text-slate-200 hover:text-white rounded-xl transition-all shadow-sm flex items-center gap-1.5 font-semibold text-xs" title="Add to Basket">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            <span>Basket</span>
+                        </button>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            lucide.createIcons();
+        }
+
+        // --- 4. Search Filter Listeners ---
+        function handleSearch(val) {
+            searchQueryString = val;
+            // Sync desktop and mobile search inputs
+            document.getElementById('desktop-search').value = val;
+            document.getElementById('mobile-search').value = val;
+            renderProducts();
+        }
+
+        function setCategoryFilter(category) {
+            activeCategoryFilter = category;
+            
+            // Style active tabs
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                if (btn.innerText.toLowerCase().includes(category) || (category === 'all' && btn.innerText.toLowerCase().includes('all'))) {
+                    btn.className = "category-btn active px-4 py-2 bg-brand-600 text-white text-sm font-semibold rounded-full whitespace-nowrap transition-all shadow-sm";
+                } else {
+                    btn.className = "category-btn px-4 py-2 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-full whitespace-nowrap transition-all";
+                }
+            });
+
+            renderProducts();
+        }
+
+        function sortProducts() {
+            activeSortRule = document.getElementById('sort-selector').value;
+            renderProducts();
+        }
+
+        function resetFilters() {
+            searchQueryString = "";
+            activeCategoryFilter = "all";
+            activeSortRule = "default";
+            
+            document.getElementById('desktop-search').value = "";
+            document.getElementById('mobile-search').value = "";
+            document.getElementById('sort-selector').value = "default";
+            
+            setCategoryFilter('all');
+        }
+
+        // --- 5. Interactive Basket/Cart Core Functions ---
+        function toggleCartDrawer(open) {
+            const overlay = document.getElementById('cart-drawer-overlay');
+            const drawer = document.getElementById('cart-drawer');
+            
+            if (open) {
+                overlay.classList.remove('pointer-events-none', 'opacity-0');
+                drawer.classList.remove('translate-x-full');
+            } else {
+                overlay.classList.add('pointer-events-none', 'opacity-0');
+                drawer.classList.add('translate-x-full');
+            }
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                    qty: 1
+                });
+            }
+
+            showToast(`Added ${product.title} to your basket!`, "check-circle", "bg-emerald-600 text-white");
+            updateCartUI();
+        }
+
+        function changeCartQty(productId, amount) {
+            const item = cart.find(i => i.id === productId);
+            if (!item) return;
+
+            item.qty += amount;
+            if (item.qty <= 0) {
+                // Remove item from basket
+                cart = cart.filter(i => i.id !== productId);
+                showToast("Removed item from basket.", "trash-2", "bg-slate-900 dark:bg-white text-white dark:text-slate-900");
+            }
+
+            updateCartUI();
+        }
+
+        function clearCart() {
+            if (cart.length === 0) return;
+            cart = [];
+            showToast("Your provision basket has been cleared.", "trash-2", "bg-slate-900 dark:bg-white text-white dark:text-slate-900");
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const subtotalLabel = document.getElementById('cart-subtotal');
+            const totalLabel = document.getElementById('cart-total');
+            const badge = document.getElementById('cart-count-badge');
+            const badgeDrawer = document.getElementById('cart-count-badge-drawer');
+            const discountLabel = document.getElementById('cart-discount');
+            const discountRow = document.getElementById('cart-discount-row');
+            
+            container.innerHTML = "";
+            let totalQty = 0;
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-16 text-center text-slate-400">
+                        <i data-lucide="shopping-basket" class="w-16 h-16 mb-4 text-slate-300"></i>
+                        <h4 class="font-bold text-slate-600 dark:text-slate-300">Your basket is empty</h4>
+                        <p class="text-xs mt-1">Browse our catalog and stock up on daily essentials!</p>
+                    </div>
+                `;
+                badge.classList.add('scale-0');
+                badgeDrawer.innerText = "0 items";
+                subtotalLabel.innerText = "$0.00";
+                totalLabel.innerText = "$0.00";
+                discountRow.classList.add('hidden');
+                lucide.createIcons();
+                return;
+            }
+
+            // Populate cart UI list cards
+            cart.forEach(item => {
+                totalQty += item.qty;
+                subtotal += item.price * item.qty;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = "flex items-center gap-4 bg-slate-50 dark:bg-slate-800 p-3 rounded-2xl border border-slate-100 dark:border-slate-700/50";
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" class="w-16 h-16 rounded-xl object-cover" onerror="this.src='https://placehold.co/150x150/16a34a/ffffff?text=Provision'">
+                    <div class="flex-grow min-w-0">
+                        <h4 class="font-bold text-xs sm:text-sm truncate" title="${item.title}">${item.title}</h4>
+                        <span class="text-xs font-bold text-brand-600 dark:text-brand-400 block mt-0.5">$${item.price.toFixed(2)}</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 bg-white dark:bg-slate-950 p-1 rounded-xl shadow-xs">
+                        <button onclick="changeCartQty(${item.id}, -1)" class="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-white rounded-lg transition">
+                            <i data-lucide="minus-square" class="w-4 h-4"></i>
+                        </button>
+                        <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
+                        <button onclick="changeCartQty(${item.id}, 1)" class="p-1 text-slate-400 hover:text-slate-800 dark:hover:text-white rounded-lg transition">
+                            <i data-lucide="plus-square" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(itemDiv);
+            });
+
+            // Calculate active discounts
+            let discountAmount = subtotal * (promoDiscountPercent / 100);
+            let finalTotal = subtotal - discountAmount + 2.50; // $2.50 simulated fixed delivery handling fee
+
+            subtotalLabel.innerText = `$${subtotal.toFixed(2)}`;
+            if (discountAmount > 0) {
+                discountLabel.innerText = `-$${discountAmount.toFixed(2)}`;
+                discountRow.classList.remove('hidden');
+            } else {
+                discountRow.classList.add('hidden');
+            }
+
+            totalLabel.innerText = `$${finalTotal.toFixed(2)}`;
+            badgeDrawer.innerText = `${totalQty} ${totalQty === 1 ? 'item' : 'items'}`;
+            badge.innerText = totalQty;
+            badge.classList.remove('scale-0');
+
+            lucide.createIcons();
+        }
+
+        // Apply discount coupon codes
+        function applyCoupon() {
+            const input = document.getElementById('coupon-input').value.trim().toUpperCase();
+            const status = document.getElementById('coupon-status');
+            
+            if (cart.length === 0) {
+                showToast("Please add provisions to your basket first!", "shopping-bag");
+                return;
+            }
+
+            if (input === 'FARM10') {
+                promoDiscountPercent = 10;
+                activePromoCode = "FARM10";
+                status.className = "text-xs mt-1 text-emerald-600 font-bold block";
+                status.innerText = "Coupon applied! 10% discount on provisions.";
+                showToast("FARM10 Coupon applied! 10% off", "badge-percent", "bg-emerald-600 text-white");
+            } else if (input === 'FREESHIP') {
+                promoDiscountPercent = 5; // Simulates 5% discount equivalent to delivery
+                activePromoCode = "FREESHIP";
+                status.className = "text-xs mt-1 text-emerald-600 font-bold block";
+                status.innerText = "Coupon applied! Delivery charges subsidised.";
+                showToast("FREESHIP Coupon applied!", "badge-percent", "bg-emerald-600 text-white");
+            } else {
+                promoDiscountPercent = 0;
+                activePromoCode = "";
+                status.className = "text-xs mt-1 text-red-500 font-bold block";
+                status.innerText = "Invalid promotion code. Try FARM10";
+                showToast("Invalid Coupon Code.", "x-circle", "bg-red-500 text-white");
+            }
+
+            updateCartUI();
+        }
+
+        // Weekly Bundle Fast Add Action
+        function addBundleToCart() {
+            // Bundle represents Milo(1), Rolled Oats(6), Butter Spread(12)
+            addToCart(1);
+            addToCart(6);
+            addToCart(12);
+            showToast("Pantry bundle added to basket!", "sparkles", "bg-brand-600 text-white");
+            toggleCartDrawer(true);
+        }
+
+        // --- 6. Smart Provision Budget Builder Algorithms ---
+        function updateBudgetSlider(val) {
+            document.getElementById('budget-value-display').innerText = `$${val}`;
+            const listContainer = document.getElementById('budget-preview-list');
+            listContainer.innerHTML = "";
+
+            // Calculate recommended products fitting under maximum budget constraint
+            let currentCost = 0;
+            let recommended = [];
+
+            // Sorted priority array to balance staples, drinks, and snacks
+            const balancePriority = [1, 2, 4, 5, 9, 11, 6, 8, 12, 10, 7, 3];
+
+            for (let id of balancePriority) {
+                const item = products.find(p => p.id === id);
+                if (item && (currentCost + item.price <= val)) {
+                    recommended.push(item);
+                    currentCost += item.price;
+                }
+            }
+
+            // Create recommendation list HTML markup
+            recommended.forEach(item => {
+                const badgeColor = item.category === 'staples' ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300' :
+                                   item.category === 'beverages' ? 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300' : 
+                                   'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
+
+                const row = document.createElement('div');
+                row.className = "flex items-center justify-between text-xs font-semibold py-1";
+                row.innerHTML = `
+                    <span class="truncate pr-4">${item.title}</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[9px] px-1.5 py-0.5 rounded-md ${badgeColor} uppercase tracking-wider">${item.category}</span>
+                        <span class="text-brand-600 dark:text-brand-400 font-extrabold">$${item.price.toFixed(2)}</span>
+                    </div>
+                `;
+                listContainer.appendChild(row);
+            });
+
+            // Cost summary text
+            const totalRow = document.createElement('div');
+            totalRow.className = "border-t border-slate-200 dark:border-slate-800 pt-2 mt-2 flex justify-between text-xs font-extrabold text-slate-500 dark:text-slate-400";
+            totalRow.innerHTML = `
+                <span>Calculated Package Cost:</span>
+                <span class="text-brand-600 dark:text-brand-400 text-sm">$${currentCost.toFixed(2)}</span>
+            `;
+            listContainer.appendChild(totalRow);
+        }
+
+        function applyBudgetKit() {
+            const val = parseFloat(document.getElementById('budget-range').value);
+            let currentCost = 0;
+            let addedCount = 0;
+
+            const balancePriority = [1, 2, 4, 5, 9, 11, 6, 8, 12, 10, 7, 3];
+
+            balancePriority.forEach(id => {
+                const item = products.find(p => p.id === id);
+                if (item && (currentCost + item.price <= val)) {
+                    // Inject directly to state basket array
+                    const existing = cart.find(x => x.id === item.id);
+                    if (existing) {
+                        existing.qty++;
+                    } else {
+                        cart.push({
+                            id: item.id,
+                            title: item.title,
+                            price: item.price,
+                            image: item.image,
+                            qty: 1
+                        });
+                    }
+                    currentCost += item.price;
+                    addedCount++;
+                }
+            });
+
+            if (addedCount > 0) {
+                showToast(`Budget kit compiled! Added ${addedCount} items.`, "sparkles", "bg-emerald-600 text-white");
+                updateCartUI();
+                toggleCartDrawer(true);
+            } else {
+                showToast("Budget value too low to build standard provision packages.", "x-circle", "bg-red-500 text-white");
+            }
+        }
+
+        // --- 7. Checkout Process & Receipt Handler ---
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showToast("Please fill your provision basket before checking out!", "shopping-bag");
+                return;
+            }
+            
+            // Close cart drawer & launch Checkout Phase
+            toggleCartDrawer(false);
+            checkoutPhase = 1;
+            renderCheckoutStep();
+            
+            const modal = document.getElementById('checkout-modal');
+            modal.classList.remove('pointer-events-none', 'opacity-0');
+            modal.querySelector('.bg-white').classList.remove('scale-95');
+        }
+
+        function closeCheckoutModal() {
+            const modal = document.getElementById('checkout-modal');
+            modal.classList.add('pointer-events-none', 'opacity-0');
+            modal.querySelector('.bg-white').classList.add('scale-95');
+        }
+
+        function toggleCardInputs(show) {
+            const fields = document.getElementById('card-details-fields');
+            if (show) {
+                fields.classList.remove('hidden');
+                document.getElementById('card-holder').setAttribute('required', 'true');
+                document.getElementById('card-num').setAttribute('required', 'true');
+            } else {
+                fields.classList.add('hidden');
+                document.getElementById('card-holder').removeAttribute('required');
+                document.getElementById('card-num').removeAttribute('removeAttribute');
+            }
+        }
+
+        function renderCheckoutStep() {
+            const step1 = document.getElementById('checkout-form-step-1');
+            const step2 = document.getElementById('checkout-form-step-2');
+            const step3 = document.getElementById('checkout-form-step-3');
+            
+            const badge1 = document.getElementById('step-1-badge');
+            const badge2 = document.getElementById('step-2-badge');
+            const badge3 = document.getElementById('step-3-badge');
+
+            const label1 = document.getElementById('step-1-label');
+            const label2 = document.getElementById('step-2-label');
+            const label3 = document.getElementById('step-3-label');
+
+            const backBtn = document.getElementById('checkout-back-btn');
+            const nextBtn = document.getElementById('checkout-next-btn');
+            const progressBar = document.getElementById('checkout-line-progress');
+
+            // Hide all steps initially
+            step1.classList.add('hidden');
+            step2.classList.add('hidden');
+            step3.classList.add('hidden');
+
+            if (checkoutPhase === 1) {
+                step1.classList.remove('hidden');
+                backBtn.classList.add('invisible');
+                nextBtn.querySelector('span').innerText = "Continue to Payment";
+                progressBar.style.width = "0%";
+                
+                badge1.className = "w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center text-sm";
+                badge2.className = "w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-sm";
+                badge3.className = "w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-sm";
+                label1.className = "text-brand-600 font-semibold";
+                label2.className = "text-slate-400";
+                label3.className = "text-slate-400";
+
+            } else if (checkoutPhase === 2) {
+                step2.classList.remove('hidden');
+                backBtn.classList.remove('invisible');
+                nextBtn.querySelector('span').innerText = "Confirm Provision Order";
+                progressBar.style.width = "50%";
+
+                badge1.className = "w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 flex items-center justify-center text-sm";
+                badge2.className = "w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center text-sm";
+                badge3.className = "w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center text-sm";
+                label1.className = "text-brand-700 dark:text-brand-300";
+                label2.className = "text-brand-600 font-semibold";
+                label3.className = "text-slate-400";
+
+            } else if (checkoutPhase === 3) {
+                step3.classList.remove('hidden');
+                backBtn.classList.add('invisible');
+                nextBtn.querySelector('span').innerText = "Done! Shop More";
+                progressBar.style.width = "100%";
+
+                badge1.className = "w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 flex items-center justify-center text-sm";
+                badge2.className = "w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-300 flex items-center justify-center text-sm";
+                badge3.className = "w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm";
+                label1.className = "text-slate-400";
+                label2.className = "text-slate-400";
+                label3.className = "text-emerald-600 font-semibold";
+                
+                buildDigitalReceipt();
+            }
+
+            lucide.createIcons();
+        }
+
+        function handleCheckoutNext() {
+            if (checkoutPhase === 1) {
+                // Form validation for step 1
+                const name = document.getElementById('cust-name').value.trim();
+                const phone = document.getElementById('cust-phone').value.trim();
+                const address = document.getElementById('cust-address').value.trim();
+
+                if (!name || !phone || !address) {
+                    showToast("Please fill out contact details forms!", "x-circle", "bg-red-500 text-white");
+                    return;
+                }
+                checkoutPhase = 2;
+                renderCheckoutStep();
+            } else if (checkoutPhase === 2) {
+                // Form validation for step 2 if credit card checked
+                const payMethod = document.querySelector('input[name="payment-method"]:checked').value;
+                if (payMethod === 'card') {
+                    const ch = document.getElementById('card-holder').value.trim();
+                    const cn = document.getElementById('card-num').value.trim();
+                    const ce = document.getElementById('card-expiry').value.trim();
+                    const cv = document.getElementById('card-cvv').value.trim();
+                    if (!ch || !cn || !ce || !cv) {
+                        showToast("Please enter credit card credentials!", "x-circle", "bg-red-500 text-white");
+                        return;
+                    }
+                }
+                
+                // Finalize order & proceed to success
+                checkoutPhase = 3;
+                renderCheckoutStep();
+            } else if (checkoutPhase === 3) {
+                // Reset store cart state and close
+                cart = [];
+                updateCartUI();
+                closeCheckoutModal();
+                showToast("Cart empty. Ready for new provisions search!", "sparkles", "bg-brand-600 text-white");
+            }
+        }
+
+        function handleCheckoutBack() {
+            if (checkoutPhase > 1) {
+                checkoutPhase--;
+                renderCheckoutStep();
+            }
+        }
+
+        // Generating Receipt logic
+        function buildDigitalReceipt() {
+            const name = document.getElementById('cust-name').value;
+            const phone = document.getElementById('cust-phone').value;
+            const address = document.getElementById('cust-address').value;
+            const payMethod = document.querySelector('input[name="payment-method"]:checked').value;
+            
+            document.getElementById('rec-cust-name').innerText = name;
+            document.getElementById('rec-cust-phone').innerText = phone;
+            document.getElementById('rec-cust-addr').innerText = address;
+            document.getElementById('rec-pay-method').innerText = payMethod === 'pod' ? "POD (Pay on Delivery)" : "Card Online";
+
+            // Order items mapping
+            const list = document.getElementById('rec-items-list');
+            list.innerHTML = "";
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price * item.qty;
+                const row = document.createElement('div');
+                row.className = "flex justify-between";
+                row.innerHTML = `
+                    <span>${item.qty}x ${item.title.substring(0, 22)}...</span>
+                    <span>$${(item.price * item.qty).toFixed(2)}</span>
+                `;
+                list.appendChild(row);
+            });
+
+            // Calculate values for receipt
+            let discount = subtotal * (promoDiscountPercent / 100);
+            let finalTotal = subtotal - discount + 2.50;
+
+            document.getElementById('rec-subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('rec-discount').innerText = `-$${discount.toFixed(2)}`;
+            document.getElementById('rec-delivery').innerText = "$2.50";
+            document.getElementById('rec-total').innerText = `$${finalTotal.toFixed(2)}`;
+            
+            // Random order ID generator
+            document.getElementById('receipt-order-id').innerText = "#PVG-" + Math.floor(10000 + Math.random() * 90000);
+        }
+
+        function printReceiptMock() {
+            window.print();
+        }
+
+        // --- 8. Product Details View Panel ---
+        function openDetailModal(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            document.getElementById('detail-img').src = product.image;
+            document.getElementById('detail-badge').innerText = product.category;
+            document.getElementById('detail-title').innerText = product.title;
+            document.getElementById('detail-price').innerText = `$${product.price.toFixed(2)}`;
+            document.getElementById('detail-rating').innerText = product.rating;
+            document.getElementById('detail-desc').innerText = product.description;
+            document.getElementById('detail-storage').innerText = product.storage;
+
+            if (product.discountPrice) {
+                document.getElementById('detail-discount').innerText = `$${product.discountPrice.toFixed(2)}`;
+                document.getElementById('detail-discount').classList.remove('hidden');
+            } else {
+                document.getElementById('detail-discount').classList.add('hidden');
+            }
+
+            // Assign modal footer CTA to act on this product id
+            const addBtn = document.getElementById('detail-add-btn');
+            addBtn.onclick = () => {
+                addToCart(product.id);
+                closeDetailModal();
+            };
+
+            const modal = document.getElementById('detail-modal');
+            modal.classList.remove('pointer-events-none', 'opacity-0');
+            modal.querySelector('.bg-white').classList.remove('scale-95');
+            
+            lucide.createIcons();
+        }
+
+        function closeDetailModal() {
+            const modal = document.getElementById('detail-modal');
+            modal.classList.add('pointer-events-none', 'opacity-0');
+            modal.querySelector('.bg-white').classList.add('scale-95');
+        }
+
+        // Newsletter subscription feedback simulation
+        function handleNewsletter(event) {
+            event.preventDefault();
+            showToast("Subscribed! Thank you for joining our weekly provisions circular.", "check-circle", "bg-emerald-600 text-white");
+            event.target.reset();
+        }
+    </script>
+    <script src="./assets/js/app.js?v=20260927crops3"></script>
+</body>
+</html>
